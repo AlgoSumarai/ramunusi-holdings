@@ -1,0 +1,10 @@
+import React from 'react';
+import { createRoot, hydrateRoot } from 'react-dom/client';
+import App, { getPageMeta } from './App';
+import './styles.css';
+const path = window.location.pathname.replace(/\/$/, '') || '/';
+const meta = getPageMeta(path); document.title = meta.title;
+document.querySelector('meta[name="description"]').content = meta.description;
+const root = document.getElementById('root');
+const app = <App path={path} search={window.location.search}/>;
+if (root.querySelector('main')) hydrateRoot(root,app); else createRoot(root).render(app);

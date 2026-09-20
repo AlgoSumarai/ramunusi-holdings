@@ -1,0 +1,12 @@
+import { useState } from 'react';
+import { company, whatsappUrl } from '../config/company';
+import { services } from '../data/services';
+import Icon from './Icon';
+export function Brand() { return <a className="brand" href="/" aria-label="Ramunusi Holdings home"><img src="/logo.png" alt="Ramunusi Holdings" width="1536" height="1024" /></a>; }
+export function Navbar({ path }) {
+  const [open, setOpen] = useState(false);
+  return <header className="header"><div className="container nav-inner"><Brand/><button className="menu-toggle" aria-expanded={open} aria-controls="main-nav" aria-label={open ? 'Close navigation' : 'Open navigation'} onClick={() => setOpen(!open)}>{open ? 'Close ✕' : 'Menu ☰'}</button><nav id="main-nav" className={open ? 'nav open' : 'nav'} aria-label="Main navigation" onKeyDown={e => { if (e.key === 'Escape') { setOpen(false); document.querySelector('.menu-toggle')?.focus(); } }}>
+    {['Home', 'About', 'Services', 'Contact'].map(label => { const href = label === 'Home' ? '/' : `/${label.toLowerCase()}`; return <a key={label} href={href} aria-current={path === href ? 'page' : undefined}>{label}</a>; })}<a className="button small" href="/contact#quote">Request a quote <Icon name="arrow"/></a></nav></div></header>;
+}
+export function Footer() { return <footer><div className="container footer-grid"><div><Brand/><p>Electrical & solar solutions.<br/>Powering the place you call home.</p></div><div><h3>Explore</h3><a href="/">Home</a><a href="/about">About us</a><a href="/services">Our services</a><a href="/contact">Contact</a></div><div><h3>Our services</h3>{services.map(s => <a key={s.slug} href={`/services/${s.slug}`}>{s.short}</a>)}</div><div><h3>Let’s talk</h3>{company.phone ? <a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a> : <span>Phone: to be confirmed</span>}{company.email ? <a href={`mailto:${company.email}`}>{company.email}</a> : <span>Email: to be confirmed</span>}<a href={whatsappUrl || '/contact'}>{whatsappUrl ? 'Chat on WhatsApp ↗' : 'WhatsApp: to be confirmed'}</a></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} Ramunusi Holdings. All rights reserved.</span><span>Built around your home.</span></div></footer>; }
+export function WhatsAppButton() { return <a className="whatsapp" href={whatsappUrl || '/contact#contact-details'} aria-label={whatsappUrl ? 'Contact Ramunusi Holdings on WhatsApp' : 'View contact details (WhatsApp number pending)'}><Icon name="chat"/><span>{whatsappUrl ? 'Let’s chat' : 'Get in touch'}</span></a>; }

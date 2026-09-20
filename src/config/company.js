@@ -1,0 +1,12 @@
+export const company = {
+  name: 'Ramunusi Holdings',
+  phone: '',
+  whatsapp: '', // International digits only, without + or spaces.
+  email: '',
+  serviceArea: '',
+  hours: '',
+  website: '', // Set the production origin, e.g. https://your-domain.co.za.
+};
+export const whatsappUrl = company.whatsapp
+  ? `https://wa.me/${company.whatsapp}?text=${encodeURIComponent('Hi Ramunusi Holdings, I would like to enquire about your electrical services.')}`
+  : null;
